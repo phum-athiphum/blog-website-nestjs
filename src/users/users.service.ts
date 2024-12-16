@@ -8,8 +8,8 @@ export class UsersService {
     @InjectRepository(User)
     private readonly userReprository: Repository<User>,
   ) {}
-  async getUserById(id: string) {
-    return this.userReprository.find({
+  async getUserById(id: string): Promise<User> {
+    return this.userReprository.findOne({
       where: { id },
     });
   }
