@@ -5,7 +5,7 @@ import { Comment } from './comment.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   username: string;
