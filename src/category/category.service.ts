@@ -8,7 +8,7 @@ export class CategoryService {
     @InjectRepository(Category)
     private readonly categoryReprository: Repository<Category>,
   ) {}
-  async getCategoryById(id: string): Promise<Category> {
+  async getCategoryById(id: number): Promise<Category> {
     return this.categoryReprository.findOne({
       where: { id },
     });

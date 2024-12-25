@@ -1,12 +1,12 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateCommentDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  userId: string;
-  @IsString()
+  userId: number;
+  @IsNumber()
   @IsNotEmpty()
-  postId: string;
+  postId: number;
 
   @IsString()
   @IsNotEmpty()

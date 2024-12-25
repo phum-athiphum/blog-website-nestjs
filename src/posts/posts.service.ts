@@ -21,7 +21,7 @@ export class PostsService {
   ) {}
 
   async getPosts(
-    categoryId?: string,
+    categoryId?: number,
     sortOrder: 'ASC' | 'DESC' = 'DESC',
   ): Promise<{ message: string; data: Post[] }> {
     const whereCondition = categoryId ? { category: { id: categoryId } } : {};
@@ -36,14 +36,14 @@ export class PostsService {
     };
   }
 
-  async getPostById(id: string): Promise<{ message: string; data: Post }> {
+  async getPostById(id: number): Promise<{ message: string; data: Post }> {
     try {
       const post = await this.postRepository.findOne({
         where: { id },
       });
 
       return {
-        message: 'Posts retrieved successfully',
+        message: 'Post retrieved successfully',
         data: post,
       };
     } catch (error) {
@@ -99,7 +99,7 @@ export class PostsService {
   }
 
   async updatePost(
-    postId: string,
+    postId: number,
     postData: UpdatePostDto,
   ): Promise<{ message: string; data: Post }> {
     try {
@@ -140,15 +140,25 @@ export class PostsService {
     }
   }
 
-  async deletePost(postId: string): Promise<{ message: string }> {
+  async deletePost(postId: number): Promise<{
+    message: string;
+    data: {
+      id: number;
+      title: string;
+    };
+  }> {
     try {
       const post = await this.postRepository.findOne({ where: { id: postId } });
       if (!post) {
         throw new NotFoundException(`Post with ID ${postId} not found`);
       }
-      await this.postRepository.remove(post);
+      const deletedPost = await this.postRepository.remove(post);
       return {
         message: 'Deleted post successfully',
+        data: {
+          id: deletedPost.id,
+          title: deletedPost.title,
+        },
       };
     } catch (error) {
       throw new HttpException(
