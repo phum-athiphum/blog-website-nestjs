@@ -87,7 +87,7 @@ export class PostsService {
 
       // Save the Post entity
       return {
-        message: 'Create Post successfully',
+        message: 'Create post successfully',
         data: savePost,
       };
     } catch (error) {
@@ -148,7 +148,7 @@ export class PostsService {
       }
       await this.postRepository.remove(post);
       return {
-        message: 'Deleted Post successfully',
+        message: 'Deleted post successfully',
       };
     } catch (error) {
       throw new HttpException(
