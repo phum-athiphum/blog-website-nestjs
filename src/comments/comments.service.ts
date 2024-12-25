@@ -20,7 +20,7 @@ export class CommentsService {
   ) {}
   async createComment(
     commentData: CreateCommentDto,
-  ): Promise<{ message: string }> {
+  ): Promise<{ message: string; data: { id: number; description: string } }> {
     try {
       const user = await this.userService.getUserById(commentData.userId);
       if (!user) {
@@ -40,13 +40,17 @@ export class CommentsService {
       const newComment = this.commentRepository.create({
         ...commentData,
         post,
+        user,
       });
 
-      await this.commentRepository.save(newComment);
+      const savedComment = await this.commentRepository.save(newComment);
 
-      // Save the Comment entity
       return {
         message: 'Create comment successfully',
+        data: {
+          id: savedComment.id,
+          description: savedComment.description,
+        },
       };
     } catch (error) {
       throw new HttpException(
