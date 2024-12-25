@@ -21,7 +21,10 @@ export class Comment {
   @ManyToOne(() => Post, (post) => post.comments, { onDelete: 'CASCADE' })
   post: Post;
 
-  @ManyToOne(() => User, (user) => user.comments, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.comments, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   user: User;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

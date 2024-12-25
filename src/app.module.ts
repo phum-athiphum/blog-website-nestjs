@@ -6,12 +6,14 @@ import { UsersModule } from './users/users.module';
 import { typeOrmConfig } from './typeoem.config';
 import { PostsModule } from './posts/posts.module';
 import { CategoryModule } from './category/category.module';
+import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     UsersModule,
     PostsModule,
     CategoryModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
