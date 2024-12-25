@@ -14,7 +14,7 @@ import { Comment } from './comment.entity';
 @Entity()
 export class Post {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   title: string;

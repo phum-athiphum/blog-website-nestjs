@@ -14,5 +14,5 @@ export class UpdatePostDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
-  categoryId?: string;
+  categoryId?: number;
 }

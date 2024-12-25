@@ -20,7 +20,7 @@ export class PostsController {
   @Get()
   @HttpCode(200)
   async getPosts(
-    @Query('categoryId') categoryId?: string,
+    @Query('categoryId') categoryId?: number,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
   ) {
     return await this.postService.getPosts(categoryId, sortOrder);
@@ -28,7 +28,7 @@ export class PostsController {
 
   @Get(':id')
   @HttpCode(200)
-  async getPostById(@Param('id') id: string) {
+  async getPostById(@Param('id') id: number) {
     return await this.postService.getPostById(id);
   }
 
@@ -41,7 +41,7 @@ export class PostsController {
   @Patch(':id')
   @HttpCode(200)
   async updatePost(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() updatePostDto: UpdatePostDto,
   ) {
     return await this.postService.updatePost(id, updatePostDto);
@@ -49,7 +49,7 @@ export class PostsController {
 
   @Delete(':id')
   @HttpCode(200)
-  async deletePost(@Param('id') id: string) {
+  async deletePost(@Param('id') id: number) {
     return this.postService.deletePost(id);
   }
 }
