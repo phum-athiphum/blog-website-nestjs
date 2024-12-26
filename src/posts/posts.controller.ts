@@ -7,11 +7,13 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { HttpCode } from '@nestjs/common';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PostsService } from './posts.service';
 import { UpdatePostDto } from './dtos/update-post.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('posts')
 export class PostsController {
@@ -33,12 +35,14 @@ export class PostsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(201)
   async createPost(@Body() postData: CreatePostDto) {
     return await this.postService.createPost(postData);
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   async updatePost(
     @Param('id') id: number,
@@ -48,6 +52,7 @@ export class PostsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   async deletePost(@Param('id') id: number) {
     return this.postService.deletePost(id);
