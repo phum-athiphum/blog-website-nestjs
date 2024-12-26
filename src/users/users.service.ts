@@ -13,4 +13,9 @@ export class UsersService {
       where: { id },
     });
   }
+  async getUserByUsername(username: string): Promise<User> {
+    return this.userReprository.findOne({
+      where: { username: username },
+    });
+  }
 }

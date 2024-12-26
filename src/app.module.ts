@@ -7,6 +7,7 @@ import { typeOrmConfig } from './typeoem.config';
 import { PostsModule } from './posts/posts.module';
 import { CategoryModule } from './category/category.module';
 import { CommentsModule } from './comments/comments.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
@@ -14,6 +15,7 @@ import { CommentsModule } from './comments/comments.module';
     PostsModule,
     CategoryModule,
     CommentsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
