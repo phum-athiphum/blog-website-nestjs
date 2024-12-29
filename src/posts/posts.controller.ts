@@ -24,9 +24,15 @@ export class PostsController {
   async getPosts(
     @Query('categoryId') categoryId?: number,
     @Query('title') title?: string,
+    @Query('userId') userId?: number,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
   ) {
-    return await this.postService.getPosts(categoryId, title, sortOrder);
+    return await this.postService.getPosts(
+      categoryId,
+      title,
+      userId,
+      sortOrder,
+    );
   }
 
   @Get(':id')
