@@ -45,6 +45,12 @@ export class PostsService {
     try {
       const post = await this.postRepository.findOne({
         where: { id },
+        relations: ['comments'],
+        order: {
+          comments: {
+            created_date: 'DESC',
+          },
+        },
       });
 
       return {
