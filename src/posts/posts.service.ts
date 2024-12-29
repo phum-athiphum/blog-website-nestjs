@@ -5,11 +5,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Post } from 'src/entities/post.entity';
+import { Post } from '../entities/post.entity';
 import { ILike, Repository } from 'typeorm';
 import { CreatePostDto } from './dtos/create-post.dto';
-import { UsersService } from 'src/users/users.service';
-import { CategoryService } from 'src/category/category.service';
+import { UsersService } from '../users/users.service';
+import { CategoryService } from '../category/category.service';
 import { UpdatePostDto } from './dtos/update-post.dto';
 @Injectable()
 export class PostsService {
@@ -23,11 +23,13 @@ export class PostsService {
   async getPosts(
     categoryId?: number,
     title?: string,
+    userId?: number,
     sortOrder: 'ASC' | 'DESC' = 'DESC',
   ): Promise<{ message: string; data: Post[] }> {
     const whereCondition = {
       ...(categoryId && { category: { id: categoryId } }),
       ...(title && { title: ILike(`%${title}%`) }),
+      ...(userId && { user: { id: userId } }),
     };
 
     const posts = await this.postRepository.find({
@@ -52,6 +54,10 @@ export class PostsService {
           },
         },
       });
+
+      if (!post) {
+        throw new NotFoundException(`Post with ID ${id} not found`);
+      }
 
       return {
         message: 'Post retrieved successfully',
