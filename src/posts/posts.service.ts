@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/entities/post.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { UsersService } from 'src/users/users.service';
 import { CategoryService } from 'src/category/category.service';
@@ -22,9 +22,14 @@ export class PostsService {
 
   async getPosts(
     categoryId?: number,
+    title?: string,
     sortOrder: 'ASC' | 'DESC' = 'DESC',
   ): Promise<{ message: string; data: Post[] }> {
-    const whereCondition = categoryId ? { category: { id: categoryId } } : {};
+    const whereCondition = {
+      ...(categoryId && { category: { id: categoryId } }),
+      ...(title && { title: ILike(`%${title}%`) }),
+    };
+
     const posts = await this.postRepository.find({
       where: whereCondition,
       order: { created_date: sortOrder },
