@@ -23,9 +23,10 @@ export class PostsController {
   @HttpCode(200)
   async getPosts(
     @Query('categoryId') categoryId?: number,
+    @Query('title') title?: string,
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'DESC',
   ) {
-    return await this.postService.getPosts(categoryId, sortOrder);
+    return await this.postService.getPosts(categoryId, title, sortOrder);
   }
 
   @Get(':id')
