@@ -13,4 +13,12 @@ export class CategoryService {
       where: { id },
     });
   }
+
+  async getAllCategory(): Promise<{ message: string; data: Category[] }> {
+    const categories = await this.categoryReprository.find();
+    return {
+      message: 'Categories retrieved successfully',
+      data: categories,
+    };
+  }
 }
